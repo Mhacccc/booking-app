@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import router from './routes/index.js'
 import connectDatabase from './db/index.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 dotenv.config();
 
@@ -12,10 +13,11 @@ app.get('/', (req, res) => {
     res.status(200).send("Hello World");
 })
 
-
 //middlewares
-app.use(express.json())
-app.use('/api', router)//route middleware
+app.use(express.json()); //Parse json
+app.use('/api', router); //Route middleware
+
+app.use(errorHandler); //Error Handler 
 
 
 app.listen(PORT, () => {
