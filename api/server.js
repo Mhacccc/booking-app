@@ -3,17 +3,22 @@ import dotenv from 'dotenv'
 import router from './routes/index.js'
 import connectDatabase from './db/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
 
+
 app.get('/', (req, res) => {
     res.status(200).send("Hello World");
 })
 
 //middlewares
+app.use(cors());
+app.use(cookieParser());
 app.use(express.json()); //Parse json
 app.use('/api', router); //Route middleware
 

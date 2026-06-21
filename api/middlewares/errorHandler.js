@@ -1,16 +1,17 @@
-import { status_400 } from "../utils/error.js";
+import { errorStatus } from "../utils/error.js";
 
-export const errorHandler = (err,req,res,next) => {
-    status_400(err)
-    const message = err.message || "Something went wrong! Internal Server Error!";
-    const status = err.status || 500;
+export const errorHandler = (error, req, res, next) => {
+    errorStatus(error)
+    const message = error.message || "Something went wrong! Internal Server Error!";
+    const status = error.status || 500;
 
-    console.log(err.message)
- 
+
+    console.log(error.message);
+
     res.status(status).json({
         success: false,
         message: message,
         status: status,
-        stack: err.stack
+        stack: error.stack
     })
 }// Global Error Handler

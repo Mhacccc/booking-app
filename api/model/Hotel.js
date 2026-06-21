@@ -4,6 +4,7 @@ const HotelSchema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
+        unique: true
     },
     type:{
         type: String,
@@ -50,6 +51,6 @@ const HotelSchema = new mongoose.Schema({
         default: false,
     }
 
-}) ;
+},{timestamps:true}) ;
 
 export default mongoose.model("Hotel", HotelSchema);
