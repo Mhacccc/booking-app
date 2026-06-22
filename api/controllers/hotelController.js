@@ -17,15 +17,16 @@ export const getAllHotels = async (req, res, next) => {
 /** Get a single hotel by ID */
 export const getHotel = async (req, res, next) => {
     try {
-
-        if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return next(createError("Invalid ID", 400))
         }
-        const hotel = await Hotel.findById(req.params.id);
+        const hotel = await Hotel.findById(req.params.id).lean();
+        if (!hotel) {
+            return next(createError("Hotel not found", 404));
+        }
         res.status(200).json(createSuccess(hotel, "Hotel retrieved successfully"));
 
-
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 }
@@ -42,20 +43,34 @@ export const createHotel = async (req, res, next) => {
 
 /** Update an existing hotel by ID */
 export const updateHotel = async (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return next(createError("Invalid ID", 400))
+    }
+
     try {
-        const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true }).lean();
+        if (!hotel) {
+            return next(createError("Hotel not found", 404));
+        }
         res.status(200).json(createSuccess(hotel, "Hotel updated successfully"));
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 }
 
 /** Delete a hotel by ID */
 export const deleteHotel = async (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return next(createError("Invalid ID", 400))
+    }
+
     try {
         const hotel = await Hotel.findByIdAndDelete(req.params.id);
+        if (!hotel) {
+            return next(createError("Hotel not found", 404));
+        }
         res.status(200).json(createSuccess(hotel, "Hotel deleted successfully"));
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 }

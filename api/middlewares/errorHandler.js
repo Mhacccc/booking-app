@@ -12,6 +12,6 @@ export const errorHandler = (error, req, res, next) => {
         success: false,
         message: message,
         status: status,
-        stack: error.stack
+        stack: process.env.NODE_ENV === "production" ? null : error.stack
     })
 }// Global Error Handler

@@ -17,7 +17,8 @@ export const register = async (req, res, next) => {
 
     try {
         const user = await User.create(newUser);
-        res.status(201).json(createSuccess(user, "User created successfully"));
+        const { password, ...otherDetails } = user.toObject();
+        res.status(201).json(createSuccess(otherDetails, "User created successfully"));
 
     } catch (error) {
         next(error);
@@ -33,7 +34,7 @@ export const login = async (req, res, next) => {
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
         if (!isPasswordCorrect) return next(createError("Incorrect username and password!", 401));
 
-        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
         const { password, isAdmin, ...otherDetails } = user.toObject();
 
@@ -47,5 +48,17 @@ export const login = async (req, res, next) => {
     }
 
 
+}
+
+export const logout = async (req, res, next) => {
+    try {
+        res.clearCookie("access_token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "none"
+        }).status(200).json(createSuccess(null, "User logged out successfully"));
+    } catch (error) {
+        next(error);
+    }
 }
 

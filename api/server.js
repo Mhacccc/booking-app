@@ -12,14 +12,15 @@ const app = express();
 const PORT = process.env.PORT;
 
 
-app.get('/', (req, res) => {
-    res.status(200).send("Hello World");
-})
-
 //middlewares
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json()); //Parse json
+
+app.get('/', (req, res) => {
+    res.status(200).send("Hello World");
+})
+
 app.use('/api', router); //Route middleware
 
 app.use(errorHandler); //Error Handler 

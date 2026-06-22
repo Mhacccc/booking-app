@@ -33,6 +33,6 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user.isAdmin) {
         next();
     } else {
-        next(createError("Access denied. Admin privileges required.", 401))
+        next(createError("Access denied. Admin privileges required.", 403))
     }
 }
