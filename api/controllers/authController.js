@@ -50,7 +50,7 @@ export const login = async (req, res, next) => {
 
 }
 
-export const logout = async (req, res, next) => {
+export const logout = (req, res, next) => {
     try {
         res.clearCookie("access_token", {
             httpOnly: true,
@@ -62,3 +62,15 @@ export const logout = async (req, res, next) => {
     }
 }
 
+export const currentLoggedIn = async (req, res, next) => {
+    try {
+        if (!req.user) {
+            return next(createError("Not authenticated", 401));
+        }
+        // req.user is a Mongoose document because verifyToken fetches it from DB
+        const { password, ...otherDetails } = req.user.toObject();
+        res.status(200).json(createSuccess(otherDetails, "Current logged in user retrieved successfully"));
+    } catch (error) {
+        next(error);
+    }
+}

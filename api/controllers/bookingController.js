@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Booking from "../model/Booking.js";
+import Hotel from "../model/Hotel.js";
+import Room from "../model/Room.js";
 import { createSuccess } from "../utils/success.js";
 import { createError } from "../utils/error.js";
 
@@ -12,8 +14,27 @@ export const createBooking = async (req, res, next) => {
             return next(createError("Invalid Hotel ID or Room ID format", 400));
         }
 
+        // 1. Verify that the Hotel exists
+        const hotelExists = await Hotel.exists({ _id: hotelId });
+        if (!hotelExists) {
+            return next(createError("Hotel does not exist", 404));
+        }
+
+        // 2. Verify that the Room type exists
+        const room = await Room.findById(roomId).lean();
+        if (!room) {
+            return next(createError("Room type does not exist", 404));
+        }
+
+        // 3. Verify that the physical room numbers actually exist under that room type
+        const existingNumbers = room.roomNumbers.map(rn => rn.number);
+        const allNumbersExist = roomNumbers.every(num => existingNumbers.includes(num));
+        if (!allNumbersExist) {
+            return next(createError("One or more room numbers do not exist under this room type", 400));
+        }
+
         // Date Overlap Validation (Standout Feature)
-        const overlappingBooking = await Booking.findOne({
+        const overlappingBooking = await Booking.exists({
             roomId,
             roomNumbers: { $in: roomNumbers },
             status: { $ne: "cancelled" },
@@ -105,6 +126,42 @@ export const deleteBooking = async (req, res, next) => {
 
         await Booking.findByIdAndDelete(req.params.id);
         res.status(200).json(createSuccess(null, "Booking cancelled and deleted successfully"));
+    } catch (error) {
+        next(error);
+    }
+};
+
+/** Update booking status (e.g., Confirm or Cancel) */
+export const updateBookingStatus = async (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return next(createError("Invalid Booking ID", 400));
+    }
+
+    try {
+        const booking = await Booking.findById(req.params.id);
+        if (!booking) {
+            return next(createError("Booking not found", 404));
+        }
+
+        const { status } = req.body;
+        if (!["pending", "confirmed", "cancelled"].includes(status)) {
+            return next(createError("Invalid status value", 400));
+        }
+
+        // Security check: Only Admins can confirm or set pending.
+        // Guests can only cancel their own bookings.
+        if (!req.user.isAdmin) {
+            if (booking.userId !== req.user.id) {
+                return next(createError("Access denied. You do not have permission to edit this booking.", 403));
+            }
+            if (status !== "cancelled") {
+                return next(createError("Access denied. Only administrators can confirm bookings.", 403));
+            }
+        }
+
+        booking.status = status;
+        const updatedBooking = await booking.save();
+        res.status(200).json(createSuccess(updatedBooking, `Booking status updated to ${status} successfully`));
     } catch (error) {
         next(error);
     }

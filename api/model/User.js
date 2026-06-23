@@ -1,5 +1,17 @@
 import mongoose from "mongoose";
 
+/**
+ * @typedef {Object} User
+ * @property {string} username - Unique username for authentication
+ * @property {string} email - Unique email address for notifications and identification
+ * @property {string} password - Bcrypt-hashed password (sanitize/exclude this from controller responses!)
+ * @property {boolean} isAdmin - Determines administrative access privileges (RBAC)
+ * @property {string} img - URL/path to the profile image
+ * @property {string} country - Country of residence (useful for booking profiles)
+ * @property {string} city - City of residence
+ * @property {string} phone - Contact phone number
+ */
+
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,

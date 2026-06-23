@@ -6,7 +6,7 @@ import { createError } from "../utils/error.js";
 /** Get all Users */
 export const getAllUsers = async (req, res, next) => {
     try {
-        const users = await User.find().lean();
+        const users = await User.find().select("-password").lean();
 
         res.status(200).json(createSuccess(users,"All Users retrieved successfully"));
     } catch(error) {
@@ -20,7 +20,7 @@ export const getUser = async (req, res, next) => {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return next(createError("Invalid ID", 400))
         }
-        const user = await User.findById(req.params.id).lean();
+        const user = await User.findById(req.params.id).select("-password").lean();
         if (!user) {
             return next(createError("User not found", 404));
         }

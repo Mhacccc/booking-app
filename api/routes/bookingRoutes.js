@@ -1,5 +1,5 @@
 import express from "express";
-import { createBooking, getUserBookings, getBooking, getAllBookings, deleteBooking } from "../controllers/bookingController.js";
+import { createBooking, getUserBookings, getBooking, getAllBookings, deleteBooking, updateBookingStatus } from "../controllers/bookingController.js";
 import { verifyToken, verifyAdmin } from "../middlewares/verify.js";
 
 const router = express.Router();
@@ -18,6 +18,9 @@ router.get('/', verifyAdmin, getAllBookings);
 
 // Get a single booking by ID (Owner or Admin check inside controller)
 router.get('/:id', getBooking);
+
+// Update booking status (Owner or Admin checks inside controller)
+router.put('/:id/status', updateBookingStatus);
 
 // Delete/Cancel a booking (Owner or Admin check inside controller)
 router.delete('/:id', deleteBooking);

@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+/**
+ * @typedef {Object} Hotel
+ * @property {string} name - Unique hotel name
+ * @property {string} type - Property classification (e.g. hotel, villa, apartment, resort)
+ * @property {string} city - Location city (used for filtering/geographical searches)
+ * @property {string} address - Physical address
+ * @property {string} distance - Distance to downtown or key attractions
+ * @property {string[]} photos - Image URLs/paths illustrating the property
+ * @property {string} title - Marketing header/tagline for listing
+ * @property {string} description - Detailed property description
+ * @property {number} rating - Aggregate guest rating score (0 to 5)
+ * @property {string[]} rooms - List of associated Room Category Document IDs (refers to 'Room' collection)
+ * @property {number} cheapestPrice - Minimum nightly rate for room types in this hotel (used for sorting)
+ * @property {boolean} featured - Highlights the property in homepage promotion carousels
+ */
+
 const HotelSchema = new mongoose.Schema({
     name:{
         type: String,

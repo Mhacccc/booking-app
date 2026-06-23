@@ -1,14 +1,20 @@
 import jwt from 'jsonwebtoken';
 import { createError } from '../utils/error.js';
+import User from '../model/User.js';
 
 // Step 1: Verify token and save user to req.user
-export const verifyToken = (req, res, next) => {
+export const verifyToken = async (req, res, next) => {
     const token = req.cookies.access_token;
     if (!token) return next(createError("You are not authenticated", 401));
     
     try {
-        const user = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = user;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // Fetch the user from the database, excluding the password hash
+        const user = await User.findById(decoded.id).select("-password");
+        if (!user) return next(createError("User no longer exists", 404));
+        req.user = user; // req.user is now the live database record!
+
         return next();
 
     } catch (error) {
