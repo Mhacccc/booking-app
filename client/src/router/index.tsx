@@ -6,14 +6,9 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import HotelList from "../pages/HotelList";
 import HotelDetail from "../pages/HotelDetail";
-
-// Placeholder for future bookings feature
-const MyBookingsPlaceholder = () => (
-  <div style={{ maxWidth: "800px", margin: "0 auto", fontFamily: "sans-serif" }}>
-    <h2>My Bookings</h2>
-    <p>This is a protected page. Your booking history will appear here once the booking flow is fully implemented.</p>
-  </div>
-);
+import MyBookings from "../pages/MyBookings";
+import BookingDetail from "../pages/BookingDetail";
+import BookingSuccess from "../pages/BookingSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +26,9 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
-          { path: "bookings", element: <MyBookingsPlaceholder /> },
+          { path: "bookings", element: <MyBookings /> },
+          { path: "bookings/:id", element: <BookingDetail /> },
+          { path: "booking/success", element: <BookingSuccess /> },
         ],
       },
 

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../stores/auth.store";
+import { Input } from "../components/ui/Input";
+import { Button } from "../components/ui/Button";
+import { Alert } from "../components/ui/Alert";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -31,55 +34,54 @@ export default function Login() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "2rem auto", padding: "1.5rem", border: "1px solid #ccc", borderRadius: "8px", fontFamily: "sans-serif" }}>
-      <h2 style={{ marginTop: 0 }}>Sign In</h2>
+    <div className="max-w-[440px] w-full mx-auto my-12 bg-white border border-gray-200 rounded-xl p-6 md:p-8 shadow-md">
+      <div className="flex flex-col items-center text-center gap-2 mb-6">
+        <span className="text-3xl font-extrabold text-primary select-none tracking-tight">StayScape</span>
+        <h2 className="text-xl font-bold text-gray-900 leading-tight">Welcome Back</h2>
+        <p className="text-xs text-gray-500 font-semibold">Sign in to manage your bookings and explore stays</p>
+      </div>
+
       {error && (
-        <div style={{ background: "#ffebee", color: "#c62828", padding: "0.75rem", borderRadius: "4px", marginBottom: "1rem", fontSize: "0.9rem" }}>
+        <Alert type="error" className="mb-4">
           {error}
-        </div>
+        </Alert>
       )}
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-          <label htmlFor="username" style={{ fontWeight: "bold", fontSize: "0.9rem" }}>Username</label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            style={{ padding: "0.5rem", fontSize: "1rem", borderRadius: "4px", border: "1px solid #ccc" }}
-          />
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-          <label htmlFor="password" style={{ fontWeight: "bold", fontSize: "0.9rem" }}>Password</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ padding: "0.5rem", fontSize: "1rem", borderRadius: "4px", border: "1px solid #ccc" }}
-          />
-        </div>
-        <button
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <Input
+          label="Username"
+          id="username"
+          type="text"
+          placeholder="Enter your username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+
+        <Input
+          label="Password"
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <Button
           type="submit"
-          disabled={isLoading}
-          style={{
-            padding: "0.75rem",
-            fontSize: "1rem",
-            background: "#0070f3",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontWeight: "bold"
-          }}
+          className="w-full mt-2"
+          isLoading={isLoading}
         >
-          {isLoading ? "Signing in..." : "Login"}
-        </button>
+          Sign In
+        </Button>
       </form>
-      <p style={{ fontSize: "0.9rem", textAlign: "center", marginTop: "1.5rem" }}>
-        Don't have an account? <Link to="/register" style={{ color: "#0070f3", textDecoration: "none" }}>Register here</Link>
+
+      <p className="text-sm text-gray-500 text-center mt-6 font-semibold">
+        Don't have an account?{" "}
+        <Link to="/register" className="text-primary hover:underline">
+          Create one
+        </Link>
       </p>
     </div>
   );
