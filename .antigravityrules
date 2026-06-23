@@ -107,12 +107,12 @@ Align your HTTP response codes with standard RESTful conventions:
 
 ### 4.6 Room & Booking Conventions
 
-#### Parent-Child Document Synchronization
+### Parent-Child Document Synchronization
 * **Rooms and Hotels:** Rooms are stored in a dedicated `rooms` collection, but their references are maintained inside the `rooms` array of their parent `Hotel` document.
 * **Creation:** When creating a room, always push the room `_id` to the parent hotel's `rooms` array inside the same action.
 * **Deletion:** When deleting a room, always pull the room `_id` from the parent hotel's `rooms` array to keep database references consistent and avoid dead references.
 
-#### Booking Date Overlaps (Concurrency Prevention)
+### Booking Date Overlaps (Concurrency Prevention)
 * Never create a booking without validating date collisions first.
 * Before saving a new `Booking`, query the collection to ensure no overlapping reservations exist for the same room and room numbers on the target dates:
   ```javascript
