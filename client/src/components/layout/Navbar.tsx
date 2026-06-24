@@ -34,6 +34,11 @@ export const Navbar: React.FC = () => {
               My Bookings
             </Link>
           )}
+          {user && user.isAdmin && (
+            <Link to="/admin" className="text-gray-700 hover:text-primary font-medium text-sm transition-colors">
+              Admin Panel
+            </Link>
+          )}
         </nav>
 
         {/* Right Auth / Profile */}
@@ -42,7 +47,7 @@ export const Navbar: React.FC = () => {
             <span className="text-xs text-gray-500">Syncing session...</span>
           ) : user ? (
             <div className="flex items-center gap-3">
-              <div className="flex flex-col text-right hidden sm:flex">
+              <div className=" flex-col text-right hidden sm:flex">
                 <span className="text-sm font-semibold text-gray-900 leading-tight">
                   {user.username}
                 </span>
