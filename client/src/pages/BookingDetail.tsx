@@ -109,7 +109,7 @@ export default function BookingDetail() {
 
       {/* Hotel summary card */}
       <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col sm:flex-row gap-4 p-6">
-        <div className="w-full sm:w-[150px] aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+        <div className="w-full sm:w-[150px] aspect-4/3 rounded-lg overflow-hidden bg-gray-100 shrink-0">
           <img
             src={hotel.photos && hotel.photos.length > 0 ? hotel.photos[0] : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80'}
             alt={hotel.name}

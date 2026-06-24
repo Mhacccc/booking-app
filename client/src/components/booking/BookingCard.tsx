@@ -66,7 +66,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-4 p-4 items-center">
       {/* Thumbnail */}
-      <div className="w-full sm:w-[120px] aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+      <div className="w-full sm:w-[120px] aspect-4/3 sm:aspect-square rounded-lg overflow-hidden bg-gray-100 shrink-0">
         <img src={imageUrl} alt={hotel?.name} className="w-full h-full object-cover" />
       </div>
 

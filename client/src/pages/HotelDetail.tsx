@@ -162,13 +162,13 @@ export default function HotelDetail() {
             <span>{hotel.distance} from center</span>
           </p>
         </div>
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <Rating value={hotel.rating || 4.5} count={120} showText className="text-base" />
         </div>
       </div>
 
       {/* Photo Gallery Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-xl overflow-hidden aspect-[2/1] bg-gray-100 shadow-sm border border-gray-100">
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-3 rounded-xl overflow-hidden aspect-2/1 bg-gray-100 shadow-sm border border-gray-100">
         <div className="md:col-span-2 h-full overflow-hidden">
           <img src={mainImageUrl} alt={hotel.name} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500" />
         </div>

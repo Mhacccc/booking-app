@@ -17,7 +17,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ hotel }) => {
   return (
     <div className="group bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1">
       {/* Image container */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+      <div className="relative aspect-16/10 overflow-hidden bg-gray-100">
         <img
           src={imageUrl}
           alt={hotel.name}
@@ -43,7 +43,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ hotel }) => {
             <h3 className="font-semibold text-gray-900 group-hover:text-primary transition-colors text-base line-clamp-1 leading-tight">
               {hotel.name}
             </h3>
-            <Rating value={hotel.rating || 4.5} className="flex-shrink-0" />
+            <Rating value={hotel.rating || 4.5} className="shrink-0" />
           </div>
           <p className="text-xs font-semibold text-gray-500 flex items-center gap-1">
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

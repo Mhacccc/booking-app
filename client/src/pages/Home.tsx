@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-12 pb-16">
       {/* Hero Section */}
-      <section className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-primary-light/50 to-blue-50/30 px-6 py-12 md:py-20 flex flex-col items-center text-center gap-6 border border-primary/5">
+      <section className="relative rounded-2xl overflow-hidden bg-linear-to-r from-primary-light/50 to-blue-50/30 px-6 py-12 md:py-20 flex flex-col items-center text-center gap-6 border border-primary/5">
         <div className="flex flex-col gap-3 max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
             Find your perfect stay
@@ -83,7 +83,7 @@ export default function Home() {
             <button
               key={cat.type}
               onClick={() => handleCategoryClick(cat.type)}
-              className="flex items-center gap-2 px-5 py-3 rounded-full bg-white border border-gray-200 hover:border-primary text-gray-700 hover:text-primary font-semibold text-sm transition-all shadow-xs cursor-pointer flex-shrink-0"
+              className="flex items-center gap-2 px-5 py-3 rounded-full bg-white border border-gray-200 hover:border-primary text-gray-700 hover:text-primary font-semibold text-sm transition-all shadow-xs cursor-pointer shrink-0"
             >
               <span>{cat.icon}</span>
               <span>{cat.name}</span>
@@ -111,7 +111,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="flex flex-col gap-3">
-                <Skeleton variant="rect" className="aspect-[16/10]" />
+                <Skeleton variant="rect" className="aspect-16/10" />
                 <Skeleton variant="text" className="h-5 w-2/3" />
                 <Skeleton variant="text" className="h-4 w-1/3" />
               </div>
@@ -136,14 +136,14 @@ export default function Home() {
             <div
               key={dest.name}
               onClick={() => navigate(`/hotels?city=${dest.name}`)}
-              className="group relative rounded-xl overflow-hidden aspect-[4/3] cursor-pointer shadow-sm hover:shadow-md transition-shadow"
+              className="group relative rounded-xl overflow-hidden aspect-4/3 cursor-pointer shadow-sm hover:shadow-md transition-shadow"
             >
               <img
                 src={dest.image}
                 alt={dest.name}
                 className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 text-white">
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 text-white">
                 <h3 className="font-extrabold text-xl tracking-tight">{dest.name}</h3>
                 <span className="text-xs text-gray-300 font-semibold">{dest.count}</span>
               </div>
