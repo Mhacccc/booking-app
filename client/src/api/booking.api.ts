@@ -11,4 +11,8 @@ export const bookingApi = {
     api.get<ApiSuccessResponse<Booking>>(`/booking/${id}`),
   delete: (id: string) =>
     api.delete<ApiSuccessResponse<null>>(`/booking/${id}`),
+  getAll: () =>
+    api.get<ApiSuccessResponse<Booking[]>>("/booking"),
+  updateStatus: (id: string, status: string) =>
+    api.put<ApiSuccessResponse<Booking>>(`/booking/${id}/status`, { status }),
 };

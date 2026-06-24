@@ -1,5 +1,5 @@
 export interface RoomNumber {
-  _id: string;
+  _id?: string;
   number: number;
   unavailableDates: string[];
 }
