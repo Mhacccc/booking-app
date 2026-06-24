@@ -14,11 +14,8 @@ This document outlines the contribution workflow, code standards, and Git conven
 ---
 
 ## 🌿 2. Branching Strategy
-We follow a standard feature-branching workflow:
-- **`main`**: Production-ready code. Never commit directly to `main`.
-- **`feature/`**: New feature development (e.g. `feature/booking-overlap`).
-- **`bugfix/`**: Bug fixes (e.g. `bugfix/unauthorized-error`).
-- **`docs/`**: Documentation updates.
+Since this is a solo development project, we commit directly to the primary branch:
+- **`main`**: Active development and production-ready code. Commit directly to `main`. Do not create separate feature branches.
 
 ---
 
